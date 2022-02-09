@@ -189,7 +189,7 @@ class Initiator
         ];
         if (!in_array($lang, array_keys($validLangs))) $lang = 'en';
 
-        if (PHP_SESSION_NONE != session_status() && $_SESSION['FOG_LANG'] != $lang) {
+        if (PHP_SESSION_NONE != session_status()) {
             $_SESSION['FOG_LANG'] = $lang;
         }
 
@@ -342,7 +342,7 @@ class Initiator
         /**
          * Language Starting
          */
-        self::language($_SESSION['FOG_LANG']);
+        self::language(isset($_SESSION['FOG_LANG']) ? $_SESSION['FOG_LANG'] : 'en');
     }
     /**
      * Sanitizes output
