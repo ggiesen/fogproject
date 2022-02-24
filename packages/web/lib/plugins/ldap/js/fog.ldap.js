@@ -18,12 +18,15 @@ $(function() {
             userNamAttr: {
                 required: true
             },
+            groupNamAttr: {
+                required: true
+            },
             grpMemberAttr: {
                 required: true
             }
         }
     };
-    setupTimeoutElement('#add, #update', '[name="name"], [name="address"], [name="searchDN"], [name="port"], [name="userNamAttr"], [name="grpMemberAttr"]', 1000);
+    setupTimeoutElement('#add, #update', '[name="name"], [name="address"], [name="searchDN"], [name="port"], [name="userNamAttr"], [name="groupNamAttr"], [name="grpMemberAttr"]', 1000);
     $('.action-boxes').on('submit',function() {
         var checked = $('input.toggle-action:checked');
         var ldapIDArray = [];
@@ -45,31 +48,41 @@ function ldapSetFields(indx) {
     switch (indx) {
         case 'edir':
             usrAttr = 'cn';
-            grpAttr = 'uniqueMember';
+            grpAttr = 'name';
+            grpMemAttr = 'uniqueMember';
+            break;
+        case 'freeipa':
+            usrAttr = 'uid';
+            grpAttr = 'cn';
+            grpMemAttr = 'member';
             break;
         case 'msad':
             usrAttr = 'samAccountName';
-            grpAttr = 'member';
+            grpAttr = 'name';
+            grpMemAttr = 'member';
             break;
         case 'open':
             usrAttr = 'cn';
-            grpAttr = 'member';
+            grpAttr = 'name';
+            grpMemAttr = 'member';
             break;
         default:
             usrAttr = '';
             grpAttr = '';
+            grpMemAttr = '';
             break;
     }
     $('#userNamAttr').val(usrAttr);
-    $('#grpMemberAttr').val(grpAttr);
+    $('#groupNamAttr').val(grpAttr);
+    $('#grpMemberAttr').val(grpMemAttr);
 }
 function ldapUseGroupToggle(indx) {
     if (indx == 0) {
-        $('#adminGroup,#userGroup,#userNamAttr,#grpMemberAttr,#bindDN,#bindPwd')
+        $('#adminGroup,#userGroup,#userNamAttr,#groupNamAttr,#grpMemberAttr,#bindDN,#bindPwd')
             .prop('readonly', true)
             .css({'background-color': 'lightgrey'});
     } else {
-        $('#adminGroup,#userGroup,#userNamAttr,#grpMemberAttr,#bindDN,#bindPwd')
+        $('#adminGroup,#userGroup,#userNamAttr,#groupNamAttr,#grpMemberAttr,#bindDN,#bindPwd')
             .prop('readonly', false)
             .css({'background-color': 'white'});
     }

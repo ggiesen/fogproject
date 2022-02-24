@@ -114,6 +114,7 @@ class LDAPManagementPage extends FOGPage
                 'searchDN' => $LDAP->DN,
                 'port' => $LDAP->port,
                 'userNamAttr' => $LDAP->userNamAttr,
+                'groupNamAttr' => $LDAP->groupNamAttr,
                 'grpMemberAttr' => $LDAP->grpMemberAttr,
                 'grpSearchDN' => $LDAP->grpSearchDN,
                 'adminGroup' => $LDAP->adminGroup,
@@ -184,6 +185,10 @@ class LDAPManagementPage extends FOGPage
         $userNamAttr = filter_input(
             INPUT_POST,
             'userNamAttr'
+        );
+        $groupNamAttr = filter_input(
+            INPUT_POST,
+            'groupNamAttr'
         );
         $grpMemberAttr = filter_input(
             INPUT_POST,
@@ -302,6 +307,9 @@ class LDAPManagementPage extends FOGPage
             . _('OpenLDAP')
             . '</option>'
             . '<option value="edir">'
+            . _('FreeIPA')
+            . '</option>'
+            . '<option value="freeipa">'
             . _('Generic LDAP')
             . '</option>'
             . '</select>',
@@ -311,6 +319,14 @@ class LDAPManagementPage extends FOGPage
             . '<input class="form-control" type="text" id="userNamAttr" name='
             . '"userNamAttr" value="'
             . $userNamAttr
+            . '" required/>'
+            . '</div>',
+            '<label for="groupNamAttr">'
+            . _('Group Name Attribute')
+            . '</label>' => '<div class="input-group">'
+            . '<input class="form-control" type="text" id="groupNamAttr" name='
+            . '"groupNamAttr" value="'
+            . $groupNamAttr
             . '" required/>'
             . '</div>',
             '<label for="grpMemberAttr">'
@@ -435,6 +451,10 @@ class LDAPManagementPage extends FOGPage
             INPUT_POST,
             'userNamAttr'
         );
+        $groupNamAttr = filter_input(
+            INPUT_POST,
+            'groupNamAttr'
+        );
         $grpMemberAttr = filter_input(
             INPUT_POST,
             'grpMemberAttr'
@@ -494,6 +514,11 @@ class LDAPManagementPage extends FOGPage
                     _('Please enter a User Name Attribute')
                 );
             }
+            if (empty($groupNamAttr)) {
+                throw new Exception(
+                    _('Please enter a Group Name Attribute')
+                );
+            }
             if (empty($grpMemberAttr)) {
                 throw new Exception(
                     _('Please enter a Group Member Attribute')
@@ -511,6 +536,7 @@ class LDAPManagementPage extends FOGPage
                 ->set('searchDN', $searchDN)
                 ->set('port', $port)
                 ->set('userNamAttr', $userNamAttr)
+                ->set('groupNamAttr', $groupNamAttr)
                 ->set('grpMemberAttr', $grpMemberAttr)
                 ->set('adminGroup', $adminGroup)
                 ->set('userGroup', $userGroup)
@@ -623,6 +649,12 @@ class LDAPManagementPage extends FOGPage
                 INPUT_POST,
                 'userNamAttr'
             ) ?: $this->obj->get('userNamAttr')
+        );
+        $groupNamAttr = (
+            filter_input(
+                INPUT_POST,
+                'groupNamAttr'
+            ) ?: $this->obj->get('groupNamAttr')
         );
         $grpMemberAttr = (
             filter_input(
@@ -757,6 +789,9 @@ class LDAPManagementPage extends FOGPage
             . _('OpenLDAP')
             . '</option>'
             . '<option value="edir">'
+            . _('FreeIPA')
+            . '</option>'
+            . '<option value="freeipa">'
             . _('Generic LDAP')
             . '</option>'
             . '</select>',
@@ -766,6 +801,14 @@ class LDAPManagementPage extends FOGPage
             . '<input class="form-control" type="text" id="userNamAttr" name='
             . '"userNamAttr" value="'
             . $userNamAttr
+            . '" required/>'
+            . '</div>',
+            '<label for="groupNamAttr">'
+            . _('Group Name Attribute')
+            . '</label>' => '<div class="input-group">'
+            . '<input class="form-control" type="text" id="groupNamAttr" name='
+            . '"groupNamAttr" value="'
+            . $groupNamAttr
             . '" required/>'
             . '</div>',
             '<label for="grpMemberAttr">'
@@ -913,6 +956,10 @@ class LDAPManagementPage extends FOGPage
             INPUT_POST,
             'userNamAttr'
         );
+        $groupNamAttr = filter_input(
+            INPUT_POST,
+            'groupNamAttr'
+        );
         $grpMemberAttr = filter_input(
             INPUT_POST,
             'grpMemberAttr'
@@ -969,6 +1016,11 @@ class LDAPManagementPage extends FOGPage
                     _('Please enter a User Name Attribute')
                 );
             }
+            if (empty($groupNamAttr)) {
+                throw new Exception(
+                    _('Please enter a Group Name Attribute')
+                );
+            }
             if (empty($grpMemberAttr)) {
                 throw new Exception(
                     _('Please enter a Group Member Attribute')
@@ -988,6 +1040,7 @@ class LDAPManagementPage extends FOGPage
                 ->set('searchDN', $searchDN)
                 ->set('port', $port)
                 ->set('userNamAttr', $userNamAttr)
+                ->set('groupNamAttr', $groupNamAttr)
                 ->set('grpMemberAttr', $grpMemberAttr)
                 ->set('adminGroup', $adminGroup)
                 ->set('userGroup', $userGroup)
