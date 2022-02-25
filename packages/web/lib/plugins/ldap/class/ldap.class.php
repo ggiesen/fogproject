@@ -651,6 +651,7 @@ class LDAP extends FOGController
         $userGroups = explode(',', $userGroup);
         $userGroups = array_map('trim', $userGroups);
         $filter = sprintf(
+            '(&(|(%s=%s))(%s=%s))',
             $groupNamAttr,
             implode(')(', $groupNamAttr, '=', (array)$userGroups),
             $grpMemAttr,
