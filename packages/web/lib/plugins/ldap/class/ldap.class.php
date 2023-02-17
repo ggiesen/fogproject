@@ -557,7 +557,7 @@ class LDAP extends FOGController
          * are admins.
          */
         if ($useGroupMatch) {
-            $accessLevel = $this->_getAccessLevel($grpMemAttr, $userDN);
+            $accessLevel = $this->_getAccessLevel($groupNamAttr, $grpMemAttr, $userDN);
         } else {
             $accessLevel = 2;
         }
